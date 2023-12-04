@@ -3,7 +3,8 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import explained_variance_score, max_error, r2_score, mean_squared_error, cross_val_score
+from sklearn.metrics import explained_variance_score, max_error, r2_score, mean_squared_error
+from sklearn.model_selection import cross_val_score
 
 
 st.title('For your new, recommended dose, please enter the following data:')
