@@ -146,7 +146,7 @@ if TSH1>=tsh_high and new_dose <= initial_weekly_dose:  # TSH is too high and ne
 elif high_tsh >= TSH1 >= low_tsh:    # normal
     #if health == "well":
     #    new_dose = new_dose  # if feeling okay, leave it
-    elif health = "unwell" and TSH1 >= unwell_cutoff:
+    if health == "unwell" and TSH1 >= unwell_cutoff:
         exact_dose+=increase_increment  # if feeling unwell, increment
 
 #new_dose = False
