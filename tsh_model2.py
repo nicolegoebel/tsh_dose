@@ -14,7 +14,7 @@ TSH2_const_val=2.0
 # get model data
 @st.cache_data
 def load_data_add_features(fname = "ForNicole3_cleaned.csv"):   #, TSH2_const_val=2.0):
-        df = pd.read_csf(fname)
+        df = pd.read_csv(fname)
         #df["TSH2_const"]=TSH2_const_val
         df['TSH_change'] = abs(df['TSH1'] - df['TSH2'])
         df['TSH_initial_high'] = (df['TSH1'] > 4.2).astype(int)
