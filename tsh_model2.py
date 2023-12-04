@@ -3,7 +3,8 @@ import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import explained_variance_score, max_error, r2_score, mean_squared_error
+from sklearn.metrics import explained_variance_score, max_error, r2_score, mean_squared_error, cross_val_score
+
 
 st.title('For your new, recommended dose, please enter the following data:')
 
@@ -11,8 +12,8 @@ TSH2_const_val=2.0
 
 # get model data
 @st.cache_data
-def load_data_add_features(fname = "ForAnalysis.xlsx"):   #, TSH2_const_val=2.0):
-        df = pd.read_excel(fname, header=1)
+def load_data_add_features(fname = "ForNicole3_cleaned.csv"):   #, TSH2_const_val=2.0):
+        df = pd.read_csf(fname)
         #df["TSH2_const"]=TSH2_const_val
         df['TSH_change'] = abs(df['TSH1'] - df['TSH2'])
         df['TSH_initial_high'] = (df['TSH1'] > 4.2).astype(int)
