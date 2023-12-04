@@ -29,9 +29,9 @@ def load_data_add_features(fname = "ForNicole3_cleaned.csv"):   #, TSH2_const_va
             df['gender'].fillna(df['gender'].mode()[0], inplace=True)
 
         # Encode the 'gender' column if it exists
-        if 'gender' in data.columns:
+        if 'gender' in df.columns:
             label_encoder = LabelEncoder()
-            data['gender'] = label_encoder.fit_transform(data['gender'].astype(str))
+            df['gender'] = label_encoder.fit_transform(df['gender'].astype(str))
 
         return df.dropna(how="any")
 
