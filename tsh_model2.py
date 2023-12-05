@@ -108,8 +108,8 @@ model, _, _, _, _, _, _ = linear_regression_model_basic(df)
 # predict new dose
 min_wt = float(df["weight"].min())
 max_wt = float(df["weight"].max())
-min_init = float(df["Initial weekly dose"].min())
-max_init = float(df["Initial weekly dose"].max() )
+min_init = float(df["Initial Dose"].min())
+max_init = float(df["Initial Dose"].max() )
 min_tsh1 = float(df["TSH1"].min())
 max_tsh1 = float(df["TSH1"].max() )
 
