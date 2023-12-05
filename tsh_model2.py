@@ -146,7 +146,7 @@ TSH_initial_normal = int(low_tsh<=TSH1<=high_tsh)
 
 exact_dose_orig = np.round(predict_new_dose(model, weight, initial_weekly_dose, TSH1, TSH_initial_high, TSH_initial_normal), 1)
 exact_dose=exact_dose_orig
-if TSH1>=high_tsh and new_dose <= initial_weekly_dose:  # TSH is too high and new_dose is less than or equL to initial weekly dose
+if TSH1>=high_tsh and exact_dose_orig <= initial_weekly_dose:  # TSH is too high and new_dose is less than or equL to initial weekly dose
     exact_dose += increase_increment
 elif high_tsh >= TSH1 >= low_tsh:    # normal
     #if health == "well":
