@@ -147,8 +147,9 @@ else:
     high_tsh = 4.2
 TSH_initial_high = int(TSH1 > high_tsh)
 TSH_initial_normal = int(low_tsh<=TSH1<=high_tsh)
+
 exact_dose = np.round(predict_new_dose(model, weight, initial_weekly_dose, TSH1, TSH_initial_high, TSH_initial_normal), 1)
-if TSH1>=tsh_high and new_dose <= initial_weekly_dose:  # TSH is too high and new_dose is less than or equL to initial weekly dose
+if TSH1>=high_tsh and new_dose <= initial_weekly_dose:  # TSH is too high and new_dose is less than or equL to initial weekly dose
     exact_dose += increase_increment
 elif high_tsh >= TSH1 >= low_tsh:    # normal
     #if health == "well":
@@ -159,4 +160,4 @@ elif high_tsh >= TSH1 >= low_tsh:    # normal
 #new_dose = False
 st.session_state["new_dose"] = math.floor(exact_dose / 25) * 25
 delta=round(st.session_state["new_dose"]-initial_weekly_dose, 1)
-st.metric("Your new dose is:", value=f'{st.session_state["new_dose"]} mL', delta=f'{delta} mL')
+st.metric("Your new dose is:", value=f'{st.session_state["new_dose"]} mL', delta=f'{delta} mL', exact_dose=f'{exact_dose} mL')
