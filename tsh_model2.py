@@ -122,16 +122,18 @@ elif widget=="slider":
         weight = st.slider("Enter your weight in Kg:", step=0.1, min_value=min_wt, max_value=max_wt)
         initial_weekly_dose = st.slider("Enter your weekly dose:", step=25.0, min_value=min_init, max_value=max_init)
         TSH1 = st.slider("Enter your original TSH level:", step=1.0, min_value=min_tsh1, max_value=max_tsh1)
+        health = st.slider("How do you feel since taking the new medication dose?", step=1.0, min_value="unwell", max_value="well")
+        pregnant = st.slider("Are you currently pregnant?", step=1.0, min_value="no", max_value="yes")
 else:
         print("No available widget choice has been made. Choose slider or text_box")
 
-health = st.radio(
-    "How do you feel since taking the new medication dose?",
-    ["well", "unwell"],
-    index=None,
-    horizontal=True
-)
-pregnant = st.radio("Are you currently pregnant?", ["yes", "no"], index=None, horiontal=True)
+#health = st.radio(
+#    "How do you feel since taking the new medication dose?",
+#    ["well", "unwell"],
+#    index=None,
+#    horizontal=True
+#)
+#pregnant = st.radio("Are you currently pregnant?", ["yes", "no"], index=None, horiontal=True)
 
 #new_dose = False
 increase_increment = 25.0
