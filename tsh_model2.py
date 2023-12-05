@@ -162,5 +162,5 @@ elif high_tsh >= TSH1 >= low_tsh:    # normal
 #new_dose = False
 st.session_state["new_dose"] = math.floor(exact_dose / 25) * 25
 delta=round(st.session_state["new_dose"]-initial_weekly_dose, 1)
-st.metric("Your new dose is:", value=f'{st.session_state["new_dose"]} mL', delta=f'{delta} mL')
-st.metric("The original, exact predicted dose was:", exact_dose=f'{exact_dose} mL')
+st.metric("Your new dose is:", value=f'{st.session_state["new_dose"]} {exact_dose_orig} mL', delta=f'{delta} mL')
+#st.metric("The original, exact predicted dose was:", exact_dose=f'{exact_dose} mL')
