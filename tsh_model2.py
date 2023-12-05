@@ -83,7 +83,7 @@ def predict_new_dose(model, weight, initial_weekly_dose, TSH1, TSH_initial_high,
 
     # If you have a gender feature, encode it as was done during training
     # For example, if 'gender' was 'f' or 'm', and 'f' was encoded as 0
-    if 'gender' in new_data.columns:
+    if 'gender' in new_data_df.columns:
         new_data_df['gender'] = label_encoder.transform(['f'])
 
 
