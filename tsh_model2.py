@@ -54,7 +54,7 @@ def linear_regression_model_basic(
     print(f"Coefficients: {linreg.coef_}")
     print(f"Intercept: {linreg.intercept_}")
 
-    linreg_all = LinearRregression()
+    linreg_all = LinearRegression()
     linreg_all.fit(X, y)
     # Perform cross-validation
     cv_scores = cross_val_score(linreg_all, X, y, cv=5, scoring='neg_mean_squared_error')
