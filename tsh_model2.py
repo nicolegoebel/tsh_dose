@@ -129,8 +129,9 @@ health = st.radio(
     "How do you feel since taking the new medication dose?",
     ["well", "unwell"],
     index=None,
+    horizontal=True
 )
-pregnant = st.radio("Are you currently pregnant?", ["yes", "no"], index=None)
+pregnant = st.radio("Are you currently pregnant?", ["yes", "no"], index=None, horiontal=True)
 
 #new_dose = False
 increase_increment = 25.0
