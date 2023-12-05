@@ -130,7 +130,7 @@ elif widget=="slider":
 else:
         print("No available widget choice has been made. Choose slider or text_box")
 
-pregnant = st.radio("Are you currently pregnant?", ["yes", "no"], horizontal=True)
+pregnant = st.radio("Are you currently pregnant?", ["no", "yes"], horizontal=True, index="no")
 
 #health = st.radio(
 #    "How do you feel since taking the new medication dose?",
