@@ -124,8 +124,7 @@ elif widget=="slider":
         TSH1 = st.slider("Enter your original TSH level:", step=1.0, min_value=min_tsh1, max_value=max_tsh1)
         health = st.slider("On a scale of 1 (unwell) to 5 (well), how do you feel since taking the new medication dose?",
                            step=1, min_value=1, max_value=5)
-        pregnant = st.radio("Are you currently pregnant?", ["yes", "no"])
-        #pregnant = st.selectbox("Are you currently pregnant?", ("yes", "no"), index=None, placeholder="Select option...")
+        pregnant = st.radio("Are you currently pregnant?", ["yes", "no"], horizontal=True)
 else:
         print("No available widget choice has been made. Choose slider or text_box")
 
@@ -142,7 +141,7 @@ increase_increment = 25.0
 unwell_cutoff = 2.0
 health_cutoff = 3.0
 low_tsh = 0.27
-if int(pregnant):
+if pregnant=="yes":
     high_tsh = 2.5
 else:
     high_tsh = 4.2
