@@ -122,7 +122,7 @@ elif widget=="slider":
         weight = st.slider("Enter your weight in Kg:", step=0.1, min_value=min_wt, max_value=max_wt)
         initial_weekly_dose = st.slider("Enter your weekly dose:", step=25.0, min_value=min_init, max_value=max_init)
         TSH1 = st.slider("Enter your original TSH level:", step=1.0, min_value=min_tsh1, max_value=max_tsh1)
-        health = st.slider("On a scale of 1 (unwell) to 5 (well), how do you feel since taking the new medication dose?", step=1.0, min_value=1, max_value=5)
+        health = st.slider("On a scale of 1 (unwell) to 5 (well), how do you feel since taking the new medication dose?", step=1.0, min_value=1.0, max_value=5.0)
         pregnant = st.radio("Are you currently pregnant?", ["yes", "no"], index=None, horizontal=True)
 else:
         print("No available widget choice has been made. Choose slider or text_box")
@@ -138,6 +138,7 @@ else:
 #new_dose = False
 increase_increment = 25.0
 unwell_cutoff = 2.0
+health_cutoff = 3.0
 low_tsh = 0.27
 if int(pregnant):
     high_tsh = 2.5
@@ -151,7 +152,7 @@ if TSH1>=tsh_high and new_dose <= initial_weekly_dose:  # TSH is too high and ne
 elif high_tsh >= TSH1 >= low_tsh:    # normal
     #if health == "well":
     #    new_dose = new_dose  # if feeling okay, leave it
-    if health == "unwell" and TSH1 >= unwell_cutoff:
+    if health <=health_cutoff and TSH1 >= unwell_cutoff:
         exact_dose+=increase_increment  # if feeling unwell, increment
 
 #new_dose = False
