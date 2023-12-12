@@ -119,7 +119,7 @@ df = load_data_add_features()
 
 # run model
 model, _, _, _, _, _, _ = linear_regression_model_basic(df)
-modelrf = (df)
+modelrf = random_forest_model(df)
 
 # predict new dose
 min_wt = float(df["weight"].min())
