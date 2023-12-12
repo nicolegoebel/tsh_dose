@@ -224,8 +224,8 @@ def get_final_dose(
 #new_dose = False
 exact_dose = get_final_dose(model, TSH1, weight, initial_weekly_dose)
 exact_dose_rf = get_final_dose(modelrf, TSH1, weight, initial_weekly_dose)
-st.session_state["new_dose"] = math.floor(exact_dose / 25) * 25
-st.session_state["new_dose_rf"] = math.floor(exact_dose_rf / 25) * 25
+st.session_state["new_dose"] = math.floor(exact_dose / 25.) * 25.
+st.session_state["new_dose_rf"] = math.floor(exact_dose_rf / 25.) * 25.
 delta=round(st.session_state["new_dose"]-initial_weekly_dose, 1)
 delta2=round(st.session_state["new_dose_rf"]-initial_weekly_dose, 1)
 
