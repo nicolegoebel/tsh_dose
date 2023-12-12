@@ -74,8 +74,8 @@ def random_forest_model(df,
                         input_cols=['weight', 'Initial Dose', "TSH1", "TSH_initial_high", "TSH_initial_normal"],
                         output_col="New Dose"):
     # Prepare the feature set and target variable
-    X = data[input_cols]  #.drop(columns=['New Dose', 'TSH2']) #, 'gender'])  # Excluding the original 'gender' column
-    y = data[output_col]
+    X = df[input_cols]  #.drop(columns=['New Dose', 'TSH2']) #, 'gender'])  # Excluding the original 'gender' column
+    y = df[output_col]
 
     # Initialize the Random Forest Regressor
     rf_regressor = RandomForestRegressor(n_estimators=100, random_state=42)
