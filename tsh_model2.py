@@ -157,6 +157,29 @@ def get_final_dose(
         low_tsh = 0.27,
         pregnant="no"
         ):
+    def predict_new_dose(model, weight, initial_weekly_dose, TSH1, TSH_initial_high, TSH_initial_normal):  #, TSH2_const_val=2.0):
+        new_data = {
+            'weight': [weight],
+            'Initial Dose': [initial_weekly_dose],
+            'TSH1': [TSH1],
+            'TSH_initial_high': [0],
+            'TSH_initial_normal': [1],
+            #'TSH_target':[2]
+        }
+        # Convert to DataFrame
+        new_data_df = pd.DataFrame(new_data)
+
+        # If you have a gender feature, encode it as was done during training
+        # For example, if 'gender' was 'f' or 'm', and 'f' was encoded as 0
+        if 'gender' in new_data_df.columns:
+            new_data_df['gender'] = label_encoder.transform(['f'])
+
+        # Make a prediction
+        predicted_new_dose = model.predict(new_data_df)
+
+        #return model.predict([[float(weight), float(initial_weekly_dose), float(TSH1), float(TSH2_const_val)]])[0]
+        return predicted_new_dose[0]
+
     if pregnant=="yes":
         high_tsh = 2.5
     else:
