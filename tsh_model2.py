@@ -146,7 +146,19 @@ else:
 
 pregnant = st.radio("Are you currently pregnant?", ["no", "yes"], horizontal=True, index=0)
 
-def get_predicted_dose(model, TSH1, increase_increment = 25.0, unwell_cutoff = 2.0, health_cutoff = 3.0, low_tsh = 0.27, pregnant="no"):
+def get_predicted_dose(
+        model,
+        TSH1,
+        weight,
+        initial_weekly_dose,
+        TSH_initial_high,
+        TSH_initial_normal,
+        increase_increment = 25.0,
+        unwell_cutoff = 2.0,
+        health_cutoff = 3.0,
+        low_tsh = 0.27,
+        pregnant="no"
+        ):
     if pregnant=="yes":
         high_tsh = 2.5
     else:
@@ -187,8 +199,8 @@ def get_predicted_dose(model, TSH1, increase_increment = 25.0, unwell_cutoff = 2
 #        exact_dose+=increase_increment  # if feeling unwell, increment
 
 #new_dose = False
-exact_dose = get_predicted_dose(model, TSH1)
-exact_dose_rf = get_predicted_dose(modelrf, TSH1)
+exact_dose = get_predicted_dose(model, TSH1, weight, initial_weekly_dose, TSH_initial_high)
+exact_dose_rf = get_predicted_dose(modelrf, TSH1, weight, initial_weekly_dose, TSH_initial_high)
 st.session_state["new_dose"] = math.floor(exact_dose / 25) * 25
 st.session_state["new_dose_rf"] = math.floor(exact_dose_rf / 25) * 25
 delta=round(st.session_state["new_dose"]-initial_weekly_dose, 1)
