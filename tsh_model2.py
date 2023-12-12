@@ -151,8 +151,6 @@ def get_predicted_dose(
         TSH1,
         weight,
         initial_weekly_dose,
-        TSH_initial_high,
-        TSH_initial_normal,
         increase_increment = 25.0,
         unwell_cutoff = 2.0,
         health_cutoff = 3.0,
@@ -199,8 +197,8 @@ def get_predicted_dose(
 #        exact_dose+=increase_increment  # if feeling unwell, increment
 
 #new_dose = False
-exact_dose = get_predicted_dose(model, TSH1, weight, initial_weekly_dose, TSH_initial_high)
-exact_dose_rf = get_predicted_dose(modelrf, TSH1, weight, initial_weekly_dose, TSH_initial_high)
+exact_dose = get_predicted_dose(model, TSH1, weight, initial_weekly_dose)
+exact_dose_rf = get_predicted_dose(modelrf, TSH1, weight, initial_weekly_dose)
 st.session_state["new_dose"] = math.floor(exact_dose / 25) * 25
 st.session_state["new_dose_rf"] = math.floor(exact_dose_rf / 25) * 25
 delta=round(st.session_state["new_dose"]-initial_weekly_dose, 1)
