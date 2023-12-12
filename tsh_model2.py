@@ -159,3 +159,5 @@ st.session_state["new_dose"] = math.floor(exact_dose / 25) * 25
 delta=round(st.session_state["new_dose"]-initial_weekly_dose, 1)
 st.metric("Your new dose is:", value=f'{st.session_state["new_dose"]} (exact was {exact_dose_orig}) mL', delta=f'{delta} mL')
 #st.metric("The original, exact predicted dose was:", exact_dose=f'{exact_dose} mL')
+if health <= health_cutoff:
+    st.write(f"Your dose was bumped up {increase_increment} mL as you stated that the current dose was making you feel unwell.")
