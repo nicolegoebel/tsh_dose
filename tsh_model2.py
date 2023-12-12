@@ -12,7 +12,7 @@ st.title('For your new, recommended dose, please enter the following data:')
 
 TSH2_const_val=2.0
 widget="text_box"
-widget="slider"
+#widget="slider"
 # get model data
 @st.cache_data
 def load_data_add_features(fname = "ForNicole3_cleaned.csv"):   #, TSH2_const_val=2.0):
