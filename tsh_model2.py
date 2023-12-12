@@ -70,6 +70,19 @@ def linear_regression_model_basic(
 
     return linreg_all, X, y, X_train, X_test, y_train, y_test
 
+def random_forest_model(df,
+                        input_cols=['weight', 'Initial Dose', "TSH1", "TSH_initial_high", "TSH_initial_normal"],
+                        output_col="New Dose"):
+    # Prepare the feature set and target variable
+    X = data[input_cols]  #.drop(columns=['New Dose', 'TSH2']) #, 'gender'])  # Excluding the original 'gender' column
+    y = data[output_col]
+
+    # Initialize the Random Forest Regressor
+    rf_regressor = RandomForestRegressor(n_estimators=100, random_state=42)
+    rf_regressor.fit(X, y)
+
+    return rf_regressor
+
 def predict_new_dose(model, weight, initial_weekly_dose, TSH1, TSH_initial_high, TSH_initial_normal):  #, TSH2_const_val=2.0):
     new_data = {
         'weight': [weight],
@@ -106,6 +119,7 @@ df = load_data_add_features()
 
 # run model
 model, _, _, _, _, _, _ = linear_regression_model_basic(df)
+modelrf = (df)
 
 # predict new dose
 min_wt = float(df["weight"].min())
@@ -132,32 +146,55 @@ else:
 
 pregnant = st.radio("Are you currently pregnant?", ["no", "yes"], horizontal=True, index=0)
 
-#new_dose = False
-increase_increment = 25.0
-unwell_cutoff = 2.0
-health_cutoff = 3.0
-low_tsh = 0.27
-if pregnant=="yes":
-    high_tsh = 2.5
-else:
-    high_tsh = 4.2
-TSH_initial_high = int(TSH1 > high_tsh)
-TSH_initial_normal = int(low_tsh<=TSH1<=high_tsh)
+def get_predicted_dose(model, TSH1, increase_increment = 25.0, unwell_cutoff = 2.0, health_cutoff = 3.0, low_tsh = 0.27, pregnant="no"):
+    if pregnant=="yes":
+        high_tsh = 2.5
+    else:
+        high_tsh = 4.2
+    TSH_initial_high = int(TSH1 > high_tsh)
+    TSH_initial_normal = int(low_tsh<=TSH1<=high_tsh)
 
-exact_dose_orig = np.round(predict_new_dose(model, weight, initial_weekly_dose, TSH1, TSH_initial_high, TSH_initial_normal), 1)
-exact_dose=exact_dose_orig
-if TSH1>=high_tsh and exact_dose_orig <= initial_weekly_dose:  # TSH is too high and new_dose is less than or equL to initial weekly dose
-    exact_dose += increase_increment
-elif high_tsh >= TSH1 >= low_tsh:    # normal
-    #if health == "well":
-    #    new_dose = new_dose  # if feeling okay, leave it
-    if health <=health_cutoff and TSH1 >= unwell_cutoff:
-        exact_dose+=increase_increment  # if feeling unwell, increment
+    exact_dose_orig = np.round(predict_new_dose(model, weight, initial_weekly_dose, TSH1, TSH_initial_high, TSH_initial_normal), 1)
+    exact_dose=exact_dose_orig
+    if TSH1>=high_tsh and exact_dose_orig <= initial_weekly_dose:  # TSH is too high and new_dose is less than or equL to initial weekly dose
+        exact_dose += increase_increment
+    elif high_tsh >= TSH1 >= low_tsh:    # normal
+        #if health == "well":
+        #    new_dose = new_dose  # if feeling okay, leave it
+        if health <=health_cutoff and TSH1 >= unwell_cutoff:
+            exact_dose+=increase_increment  # if feeling unwell, increment
+    return exact_dose, exact_dose_orig
+    #new_dose = False
+#increase_increment = 25.0
+#unwell_cutoff = 2.0
+#health_cutoff = 3.0
+#low_tsh = 0.27
+#if pregnant=="yes":
+#    high_tsh = 2.5
+#else:
+#    high_tsh = 4.2
+#TSH_initial_high = int(TSH1 > high_tsh)
+#TSH_initial_normal = int(low_tsh<=TSH1<=high_tsh)
+#
+#exact_dose_orig = np.round(predict_new_dose(model, weight, initial_weekly_dose, TSH1, TSH_initial_high, TSH_initial_normal), 1)
+#exact_dose=exact_dose_orig
+#if TSH1>=high_tsh and exact_dose_orig <= initial_weekly_dose:  # TSH is too high and new_dose is less than or equL to initial weekly dose
+#    exact_dose += increase_increment
+#elif high_tsh >= TSH1 >= low_tsh:    # normal
+#    #if health == "well":
+#    #    new_dose = new_dose  # if feeling okay, leave it
+#    if health <=health_cutoff and TSH1 >= unwell_cutoff:
+#        exact_dose+=increase_increment  # if feeling unwell, increment
 
 #new_dose = False
+exact_dose = get_predicted_dose(model, TSH1)
+exact_dose_rf = get_predicted_dose(modelrf, TSH1)
 st.session_state["new_dose"] = math.floor(exact_dose / 25) * 25
+st.session_state["new_dose_rf"] = math.floor(exact_dose_rf / 25) * 25
 delta=round(st.session_state["new_dose"]-initial_weekly_dose, 1)
-st.metric("Your new dose is:", value=f'{st.session_state["new_dose"]} (exact was {exact_dose_orig}) mL', delta=f'{delta} mL')
+delta2=round(st.session_state["new_dose_rf"]-initial_weekly_dose, 1)
+
+st.metric("Your new dose is:", value=f'{st.session_state["new_dose"]} or {st.session_state["new_dose_rf"]} (exact was {exact_dose_orig}) mL', delta=f'{delta} or {delta2} mL')
 #st.metric("The original, exact predicted dose was:", exact_dose=f'{exact_dose} mL')
 if health <= health_cutoff:
     st.write(f"Your dose was bumped up {increase_increment} mL as you stated that the current dose was making you feel unwell.")
