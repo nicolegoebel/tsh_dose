@@ -16,6 +16,7 @@ TSH2_const_val=2.0
 widget="text_box"
 #widget="slider"
 health_cutoff = 3.0
+increase_increment = 25.0
 
 # get model data
 @st.cache_data
