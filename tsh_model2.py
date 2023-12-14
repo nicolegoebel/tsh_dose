@@ -237,4 +237,4 @@ delta2=round(st.session_state["new_dose_rf"]-initial_weekly_dose, 1)
 st.metric("Your new dose is:", value=f'{st.session_state["new_dose"]} or {st.session_state["new_dose_rf"]} (exact was {exact_dose_orig}) mL', delta=f'{delta} or {delta2} mL')
 #st.metric("The original, exact predicted dose was:", exact_dose=f'{exact_dose} mL')
 if health <= health_cutoff:
-    st.write("Your dose was bumped up" f'{increase_increment}' "mL as you stated that the current dose was making you feel unwell.")
+    st.write("Your dose was bumped up " f'{increase_increment}' " mL, as you stated that the current dose was making you feel unwell.")
